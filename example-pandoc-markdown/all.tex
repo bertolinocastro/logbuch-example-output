@@ -1,0 +1,1080 @@
+%%
+% Copyright (c) 2017 - 2019, Pascal Wagler;
+% Copyright (c) 2014 - 2019, John MacFarlane
+%
+% All rights reserved.
+%
+% Redistribution and use in source and binary forms, with or without
+% modification, are permitted provided that the following conditions
+% are met:
+%
+% - Redistributions of source code must retain the above copyright
+% notice, this list of conditions and the following disclaimer.
+%
+% - Redistributions in binary form must reproduce the above copyright
+% notice, this list of conditions and the following disclaimer in the
+% documentation and/or other materials provided with the distribution.
+%
+% - Neither the name of John MacFarlane nor the names of other
+% contributors may be used to endorse or promote products derived
+% from this software without specific prior written permission.
+%
+% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+% "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+% LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+% FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+% COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+% INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+% BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+% LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+% CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+% LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+% ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+% POSSIBILITY OF SUCH DAMAGE.
+%%
+
+%%
+% For usage information and examples visit the GitHub page of this template:
+% https://github.com/Wandmalfarbe/pandoc-latex-template
+%%
+
+\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*,table}{xcolor}
+%
+\documentclass[
+  12pt,
+  a4paper,
+  oneside,tablecaptionabove
+]{scrbook}
+\usepackage{lmodern}
+\usepackage{setspace}
+\setstretch{1.2}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provides euro and other symbols
+\else % if luatex or xelatex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\definecolor{default-linkcolor}{HTML}{A50000}
+\definecolor{default-filecolor}{HTML}{A50000}
+\definecolor{default-citecolor}{HTML}{4077C0}
+\definecolor{default-urlcolor}{HTML}{4077C0}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Logbuch},
+  pdfauthor={bertolino},
+  pdfkeywords={Markdown},
+  colorlinks=true,
+  linkcolor=default-linkcolor,
+  filecolor=default-filecolor,
+  citecolor=default-citecolor,
+  urlcolor=default-urlcolor,
+  breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage[margin=2.5cm,includehead=true,includefoot=true,centering]{geometry}
+\usepackage{listings}
+\newcommand{\passthrough}[1]{#1}
+\lstset{defaultdialect=[5.3]Lua}
+\lstset{defaultdialect=[x86masm]Assembler}
+\usepackage{longtable,booktabs}
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Make links footnotes instead of hotlinks:
+\DeclareRobustCommand{\href}[2]{#2\footnote{\url{#1}}}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{2}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% Make use of float-package and set default placement for figures to H
+\usepackage{float}
+\floatplacement{figure}{H}
+
+\renewcommand{\thetable}{\arabic{table}}
+\renewcommand{\thefigure}{\arabic{figure}}
+\renewcommand{\thesection}{\arabic{section}}
+\usepackage{lipsum}
+\usepackage[]{biblatex}
+\addbibresource{reference.bib}
+
+\title{Logbuch}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Research/Academia life notes}
+\author{bertolino}
+\date{\today}
+
+
+
+
+
+%%
+%% added
+%%
+
+%
+% No language specified? take American English.
+%
+
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[shorthands=off,main=english]{babel}
+\else
+    % See issue https://github.com/reutenauer/polyglossia/issues/127
+  \renewcommand*\familydefault{\sfdefault}
+    % load polyglossia as late as possible as it *could* call bidi if RTL lang (e.g. Hebrew or Arabic)
+  \usepackage{polyglossia}
+  \setmainlanguage[]{english}
+\fi
+
+
+%
+% colors
+%
+\usepackage[]{xcolor}
+
+%
+% listing colors
+%
+\definecolor{listing-background}{HTML}{F7F7F7}
+\definecolor{listing-rule}{HTML}{B3B2B3}
+\definecolor{listing-numbers}{HTML}{B3B2B3}
+\definecolor{listing-text-color}{HTML}{000000}
+\definecolor{listing-keyword}{HTML}{435489}
+\definecolor{listing-identifier}{HTML}{435489}
+\definecolor{listing-string}{HTML}{00999A}
+\definecolor{listing-comment}{HTML}{8E8E8E}
+\definecolor{listing-javadoc-comment}{HTML}{006CA9}
+
+%\definecolor{listing-background}{rgb}{0.97,0.97,0.97}
+%\definecolor{listing-rule}{HTML}{B3B2B3}
+%\definecolor{listing-numbers}{HTML}{B3B2B3}
+%\definecolor{listing-text-color}{HTML}{000000}
+%\definecolor{listing-keyword}{HTML}{D8006B}
+%\definecolor{listing-identifier}{HTML}{000000}
+%\definecolor{listing-string}{HTML}{006CA9}
+%\definecolor{listing-comment}{rgb}{0.25,0.5,0.35}
+%\definecolor{listing-javadoc-comment}{HTML}{006CA9}
+
+%
+% for the background color of the title page
+%
+\usepackage{pagecolor}
+\usepackage{afterpage}
+
+%
+% TOC depth and
+% section numbering depth
+%
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+%
+% break urls
+%
+\PassOptionsToPackage{hyphens}{url}
+
+%
+% When using babel or polyglossia with biblatex, loading csquotes is recommended
+% to ensure that quoted texts are typeset according to the rules of your main language.
+%
+\usepackage{csquotes}
+
+%
+% captions
+%
+\definecolor{caption-color}{HTML}{777777}
+\usepackage[font={stretch=1.2}, textfont={color=caption-color}, position=top, skip=4mm, labelfont=bf, singlelinecheck=false, justification=raggedright]{caption}
+\setcapindent{0em}
+\captionsetup[longtable]{position=above}
+
+%
+% blockquote
+%
+\definecolor{blockquote-border}{RGB}{221,221,221}
+\definecolor{blockquote-text}{RGB}{119,119,119}
+\usepackage{mdframed}
+\newmdenv[rightline=false,bottomline=false,topline=false,linewidth=3pt,linecolor=blockquote-border,skipabove=\parskip]{customblockquote}
+\renewenvironment{quote}{\begin{customblockquote}\list{}{\rightmargin=0em\leftmargin=0em}%
+\item\relax\color{blockquote-text}\ignorespaces}{\unskip\unskip\endlist\end{customblockquote}}
+
+%
+% Source Sans Pro as the de­fault font fam­ily
+% Source Code Pro for monospace text
+%
+% 'default' option sets the default
+% font family to Source Sans Pro, not \sfdefault.
+%
+\usepackage[default]{sourcesanspro}
+\usepackage{sourcecodepro}
+
+% XeLaTeX specific adjustments for straight quotes: https://tex.stackexchange.com/a/354887
+% This issue is already fixed (see https://github.com/silkeh/latex-sourcecodepro/pull/5) but the
+% fix is still unreleased.
+% TODO: Remove this workaround when the new version of sourcecodepro is reelased on CTAN.
+\ifxetex
+\makeatletter
+\defaultfontfeatures[\ttfamily]
+  { Numbers   = \sourcecodepro@figurestyle,
+    Scale     = \SourceCodePro@scale,
+    Extension = .otf }
+\setmonofont
+  [ UprightFont    = *-\sourcecodepro@regstyle,
+    ItalicFont     = *-\sourcecodepro@regstyle It,
+    BoldFont       = *-\sourcecodepro@boldstyle,
+    BoldItalicFont = *-\sourcecodepro@boldstyle It ]
+  {SourceCodePro}
+\makeatother
+\fi
+
+%
+% heading color
+%
+\definecolor{heading-color}{RGB}{40,40,40}
+\addtokomafont{section}{\color{heading-color}}
+% When using the classes report, scrreprt, book,
+% scrbook or memoir, uncomment the following line.
+\addtokomafont{chapter}{\color{heading-color}}
+
+%
+% variables for title and author
+%
+\usepackage{titling}
+\title{Logbuch}
+\author{bertolino}
+
+%
+% tables
+%
+
+\definecolor{table-row-color}{HTML}{F5F5F5}
+\definecolor{table-rule-color}{HTML}{999999}
+
+%\arrayrulecolor{black!40}
+\arrayrulecolor{table-rule-color}     % color of \toprule, \midrule, \bottomrule
+\setlength\heavyrulewidth{0.3ex}      % thickness of \toprule, \bottomrule
+\renewcommand{\arraystretch}{1.3}     % spacing (padding)
+
+% Reset rownum counter so that each table
+% starts with the same row colors.
+% https://tex.stackexchange.com/questions/170637/restarting-rowcolors
+\let\oldlongtable\longtable
+\let\endoldlongtable\endlongtable
+\renewenvironment{longtable}{
+\rowcolors{3}{}{table-row-color!100}  % row color
+\oldlongtable} {
+\endoldlongtable
+\global\rownum=0\relax}
+
+% Unfortunately the colored cells extend beyond the edge of the
+% table because pandoc uses @-expressions (@{}) like so:
+%
+% \begin{longtable}[]{@{}ll@{}}
+% \end{longtable}
+%
+% https://en.wikibooks.org/wiki/LaTeX/Tables#.40-expressions
+
+%
+% remove paragraph indention
+%
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+
+%
+%
+% Listings
+%
+%
+
+\lstdefinestyle{eisvogel_listing_style}{
+  language         = java,
+  numbers          = left,
+  xleftmargin      = 2.7em,
+  framexleftmargin = 2.5em,
+  backgroundcolor  = \color{listing-background},
+  basicstyle       = \color{listing-text-color}\small\ttfamily{}\linespread{1.15}, % print whole listing small
+  breaklines       = true,
+  frame            = single,
+  framesep         = 0.6mm,
+  rulecolor        = \color{listing-rule},
+  frameround       = ffff,
+  tabsize          = 4,
+  numberstyle      = \color{listing-numbers},
+  aboveskip        = 1.0em,
+  belowcaptionskip = 1.0em,
+  keywordstyle     = \color{listing-keyword}\bfseries,
+  classoffset      = 0,
+  sensitive        = true,
+  identifierstyle  = \color{listing-identifier},
+  commentstyle     = \color{listing-comment},
+  morecomment      = [s][\color{listing-javadoc-comment}]{/**}{*/},
+  stringstyle      = \color{listing-string},
+  showstringspaces = false,
+  escapeinside     = {/*@}{@*/}, % Allow LaTeX inside these special comments
+  literate         =
+  {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+  {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+  {à}{{\`a}}1 {è}{{\'e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+  {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+  {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+  {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+  {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+  {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+  {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+  {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+  {€}{{\EUR}}1 {£}{{\pounds}}1 {«}{{\guillemotleft}}1
+  {»}{{\guillemotright}}1 {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {¿}{{?`}}1
+  {…}{{\ldots}}1 {≥}{{>=}}1 {≤}{{<=}}1 {„}{{\glqq}}1 {“}{{\grqq}}1
+  {”}{{''}}1
+}
+\lstset{style=eisvogel_listing_style}
+
+\lstdefinelanguage{XML}{
+  morestring      = [b]",
+  moredelim       = [s][\bfseries\color{listing-keyword}]{<}{\ },
+  moredelim       = [s][\bfseries\color{listing-keyword}]{</}{>},
+  moredelim       = [l][\bfseries\color{listing-keyword}]{/>},
+  moredelim       = [l][\bfseries\color{listing-keyword}]{>},
+  morecomment     = [s]{<?}{?>},
+  morecomment     = [s]{<!--}{-->},
+  commentstyle    = \color{listing-comment},
+  stringstyle     = \color{listing-string},
+  identifierstyle = \color{listing-identifier}
+}
+
+%
+% header and footer
+%
+\usepackage{fancyhdr}
+
+\def \logbuchprojectmark {}
+\def \logbuchsubjectmark {}
+\def \logbuchsubjectdatemark {}
+\def \logbuchsubjectauthmark {}
+
+\fancypagestyle{eisvogel-header-footer}{
+  \fancyhead[LO,RE]{\logbuchprojectmark}
+  \fancyhead[C]{\logbuchsubjectmark}
+  \fancyhead[RO,LE]{\logbuchsubjectdatemark}
+  \fancyfoot[LO,RE]{\logbuchsubjectauthmark}
+  \fancyfoot[C]{}
+  \fancyfoot[RO,LE]{\thepage}
+  \renewcommand{\headrulewidth}{0.4pt}
+  \renewcommand{\footrulewidth}{0.4pt}
+}
+\pagestyle{eisvogel-header-footer}
+
+%%
+%% end added
+%%
+
+%%
+%% Logbuch adition
+%%
+
+% \definecolor{partpage-color}{HTML}{}
+
+% \setkomafont{chapter}{\normalfont\huge\sffamily\bfseries\color{blue}}
+% \addtokomafont{section}{\color{cyan}}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+
+
+\begin{document}
+%%
+%% begin titlepage
+%%
+
+\begin{titlepage}
+\newgeometry{left=6cm}
+\definecolor{titlepage-color}{HTML}{3E3E3B}
+\newpagecolor{titlepage-color}\afterpage{\restorepagecolor}
+\newcommand{\colorRule}[3][black]{\textcolor[HTML]{#1}{\rule{#2}{#3}}}
+\begin{flushleft}
+\noindent
+\\[-1em]
+\color[HTML]{EBECED}
+\makebox[0pt][l]{\colorRule[A2AAB0]{1.3\textwidth}{4pt}}
+\par
+\noindent
+
+{ \setstretch{1.4}
+\vfill
+\noindent {\huge \textbf{\textsf{Logbuch}}}
+\vskip 1em
+{\Large \textsf{Research/Academia life notes}}
+\vskip 2em
+\noindent
+{\Large \textsf{bertolino}
+\vfill
+}
+
+
+\textsf{\today}}
+\end{flushleft}
+\end{titlepage}
+\restoregeometry
+
+%%
+%% end titlepage
+%%
+
+
+\setcounter{chapter}{1}
+\addtocounter{chapter}{-1}
+
+\renewcommand*\contentsname{Projects}
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{3}
+\pagestyle{plain}
+\tableofcontents
+\newpage
+}
+
+\part*{A repeated project \\ \bigskip\bigskip\bigskip\bigskip\bigskip\normalfont\large{bertolino}}
+\addcontentsline{toc}{part}{A repeated project}
+
+\def \logbuchprojectmark {A repeated project}
+
+\chapter*{\LARGE{A copy from other subject}}
+
+\addcontentsline{toc}{chapter}{$\circ$ A copy from other subject}
+\setcounter{section}{0}
+
+\def \logbuchsubjectmark {A copy from other subject}
+\def \logbuchsubjectdatemark {09.03.2019 15:14}
+\def \logbuchsubjectauthmark {\textit{bertolino}}
+\thispagestyle{eisvogel-header-footer}
+\textbf{The content below was copied from
+http://www.unexpected-vortices.com/sw/rippledoc/quick-markdown-example.html
+at 2019-03-09 and has some modifications.}
+
+\hypertarget{an-h1-header}{%
+\section{An h1 header}\label{an-h1-header}}
+
+Paragraphs are separated by a blank line.
+
+2nd paragraph. \emph{Italic}, \textbf{bold}, and
+\passthrough{\lstinline!monospace!}. Itemized lists look like:
+
+\begin{itemize}
+\tightlist
+\item
+  this one
+\item
+  that one
+\item
+  the other one
+\end{itemize}
+
+Note that --- not considering the asterisk --- the actual text content
+starts at 4-columns in.
+
+\begin{quote}
+Block quotes are written like so.
+
+They can span multiple paragraphs, if you like.
+\end{quote}
+
+Use 3 dashes for an em-dash. Use 2 dashes for ranges (ex., ``it's all in
+chapters 12--14''). Three dots \ldots{} will be converted to an
+ellipsis. Unicode is supported. \textbf{\emph{It depends on the output
+format. You may face problems while converting an unicode character to
+LaTeX. For example, if you use the ``+emoji'' extension, pandoc will
+generate unicode.}}
+
+\hypertarget{an-h2-header}{%
+\subsection{An h2 header}\label{an-h2-header}}
+
+Here's a numbered list:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  first item
+\item
+  second item
+\item
+  third item
+\end{enumerate}
+
+Note again how the actual text starts at 4 columns in (4 characters from
+the left side). Here's a code sample:
+
+\begin{lstlisting}
+# Let me re-iterate ...
+for i in 1 .. 10 { do-something(i) }
+\end{lstlisting}
+
+As you probably guessed, indented 4 spaces. By the way, instead of
+indenting the block, you can use delimited blocks, if you like:
+
+\begin{lstlisting}
+define foobar() {
+    print "Welcome to flavor country!";
+An h1 header
+============
+
+Paragraphs are separated by a blank line.
+
+2nd paragraph. *Italic*, **bold**, and `monospace`. Itemized lists
+look like:
+
+  * this one
+  * that one
+  * the other one
+
+Note that --- not considering the asterisk --- the actual text
+content starts at 4-columns in.
+
+> Block quotes are
+> written like so.
+>
+> They can span multiple paragraphs,
+> if you like.
+
+Use 3 dashes for an em-dash. Use 2 dashes for ranges (ex., "it's all
+in chapters 12--14"). Three dots ... will be converted to an ellipsis.
+Unicode is supported.
+
+
+
+An h2 header
+------------
+
+Here's a numbered list:
+
+ 1. first item
+ 2. second item
+ 3. third item
+
+Note again how the actual text starts at 4 columns in (4 characters
+from the left side). Here's a code sample:
+
+    # Let me re-iterate ...
+    for i in 1 .. 10 { do-something(i) }
+
+As you probably guessed, indented 4 spaces. By the way, instead of
+indenting the block, you can use delimited blocks, if you like:
+\end{lstlisting}
+
+define foobar() \{ print ``Welcome to flavor country!''; \}
+\textasciitilde\textasciitilde\textasciitilde{}
+
+(which makes copying \& pasting easier). You can optionally mark the
+delimited block for Pandoc to syntax highlight it:
+
+\begin{lstlisting}[language=Python]
+import time
+# Quick, count to ten!
+for i in range(10):
+    # (but not *too* quick)
+    time.sleep(0.5)
+    print(i)
+\end{lstlisting}
+
+\hypertarget{an-h3-header}{%
+\subsubsection{An h3 header}\label{an-h3-header}}
+
+Now a nested list:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  First, get these ingredients:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    carrots
+  \item
+    celery
+  \item
+    lentils
+  \end{itemize}
+\item
+  Boil some water.
+\item
+  Dump everything in the pot and follow this algorithm:
+
+\begin{lstlisting}
+find wooden spoon
+uncover pot
+stir
+cover pot
+balance wooden spoon precariously on pot handle
+wait 10 minutes
+goto first step (or shut off burner when done)
+\end{lstlisting}
+
+  Do not bump wooden spoon or it will fall.
+\end{enumerate}
+
+Notice again how text always lines up on 4-space indents (including that
+last line which continues item 3 above).
+
+Here's a link to \href{http://foo.bar}{a website}, to a
+\href{local-doc.html}{local doc}, and to a
+\protect\hyperlink{an-h2-header}{section heading in the current doc}.
+Here's a footnote \footnote{Some footnote text.}.
+
+Tables can look like this:
+
+\begin{longtable}[]{@{}lrll@{}}
+\caption{Shoes sizes, materials, and colors.}\tabularnewline
+\toprule
+Name & Size & Material & Color\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+Name & Size & Material & Color\tabularnewline
+\midrule
+\endhead
+All Business & 9 & leather & brown\tabularnewline
+Roundabout & 10 & hemp canvas & natural\tabularnewline
+Cinderella & 11 & glass & transparent\tabularnewline
+\bottomrule
+\end{longtable}
+
+(The above is the caption for the table.) Pandoc also supports
+multi-line tables:
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.13\columnwidth}\raggedright
+Keyword\strut
+\end{minipage} & \begin{minipage}[b]{0.31\columnwidth}\raggedright
+Text\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.13\columnwidth}\raggedright
+red\strut
+\end{minipage} & \begin{minipage}[t]{0.31\columnwidth}\raggedright
+Sunsets, apples, and other red or reddish things.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.13\columnwidth}\raggedright
+green\strut
+\end{minipage} & \begin{minipage}[t]{0.31\columnwidth}\raggedright
+Leaves, grass, frogs and other things it's not easy being.\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+A horizontal rule follows.
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+Here's a definition list:
+
+\begin{description}
+\tightlist
+\item[apples]
+Good for making applesauce.
+\item[oranges]
+Citrus!
+\item[tomatoes]
+There's no ``e'' in tomatoe.
+\end{description}
+
+Again, text is indented 4 spaces. (Put a blank line between each term
+and its definition to spread things out more.)
+
+Here's a ``line block'' (note how whitespace is honored):
+
+Line one\\
+\hspace*{0.333em}\hspace*{0.333em}Line too\\
+Line tree
+
+and images can be specified like so:
+
+\begin{figure}
+\centering
+\includegraphics{example-image.jpg}
+\caption{example image}
+\end{figure}
+
+Inline math equation: \(\omega = d\phi / dt\). Display math should get
+its own line like so:
+
+\[I = \int \rho R^{2} dV\]
+
+And note that you can backslash-escape any punctuation characters which
+you wish to be displayed literally, ex.: `foo`, *bar*, etc.
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+And also, we may cite others scientific papers/book/whatever.
+
+It's recommended to use as \passthrough{\lstinline!pandoc\_extra\_args!}
+this: ``--filter=pandoc-citeproc''
+
+Citing The Wiki Brazil \textcite{wiki:Brazil}, Citing The Wiki
+Plagiarism \autocite{wiki:Plagiarism} and Citing the Deusch Language
+Wiki \autocite*{wiki:Deutsch}. \_\_\_
+
+
+\part*{Dummy project \\ \bigskip\bigskip\bigskip\bigskip\bigskip\normalfont\large{bertolino}}
+\addcontentsline{toc}{part}{Dummy project}
+
+\def \logbuchprojectmark {Dummy project}
+
+\chapter*{\LARGE{Quick markdown example}}
+
+\addcontentsline{toc}{chapter}{$\circ$ Quick markdown example}
+\setcounter{section}{0}
+
+\def \logbuchsubjectmark {Quick markdown example}
+\def \logbuchsubjectdatemark {09.03.2019 02:40}
+\def \logbuchsubjectauthmark {\textit{bertolino}}
+\thispagestyle{eisvogel-header-footer}
+\textbf{The content below was copied from
+http://www.unexpected-vortices.com/sw/rippledoc/quick-markdown-example.html
+at 2019-03-09 and has some modifications.}
+
+\hypertarget{an-h1-header}{%
+\section{An h1 header}\label{an-h1-header}}
+
+Paragraphs are separated by a blank line.
+
+2nd paragraph. \emph{Italic}, \textbf{bold}, and
+\passthrough{\lstinline!monospace!}. Itemized lists look like:
+
+\begin{itemize}
+\tightlist
+\item
+  this one
+\item
+  that one
+\item
+  the other one
+\end{itemize}
+
+Note that --- not considering the asterisk --- the actual text content
+starts at 4-columns in.
+
+\begin{quote}
+Block quotes are written like so.
+
+They can span multiple paragraphs, if you like.
+\end{quote}
+
+Use 3 dashes for an em-dash. Use 2 dashes for ranges (ex., ``it's all in
+chapters 12--14''). Three dots \ldots{} will be converted to an
+ellipsis. Unicode is supported. \textbf{\emph{It depends on the output
+format. You may face problems while converting an unicode character to
+LaTeX. For example, if you use the ``+emoji'' extension, pandoc will
+generate unicode.}}
+
+\hypertarget{an-h2-header}{%
+\subsection{An h2 header}\label{an-h2-header}}
+
+Here's a numbered list:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  first item
+\item
+  second item
+\item
+  third item
+\end{enumerate}
+
+Note again how the actual text starts at 4 columns in (4 characters from
+the left side). Here's a code sample:
+
+\begin{lstlisting}
+# Let me re-iterate ...
+for i in 1 .. 10 { do-something(i) }
+\end{lstlisting}
+
+As you probably guessed, indented 4 spaces. By the way, instead of
+indenting the block, you can use delimited blocks, if you like:
+
+\begin{lstlisting}
+define foobar() {
+    print "Welcome to flavor country!";
+An h1 header
+============
+
+Paragraphs are separated by a blank line.
+
+2nd paragraph. *Italic*, **bold**, and `monospace`. Itemized lists
+look like:
+
+  * this one
+  * that one
+  * the other one
+
+Note that --- not considering the asterisk --- the actual text
+content starts at 4-columns in.
+
+> Block quotes are
+> written like so.
+>
+> They can span multiple paragraphs,
+> if you like.
+
+Use 3 dashes for an em-dash. Use 2 dashes for ranges (ex., "it's all
+in chapters 12--14"). Three dots ... will be converted to an ellipsis.
+Unicode is supported.
+
+
+
+An h2 header
+------------
+
+Here's a numbered list:
+
+ 1. first item
+ 2. second item
+ 3. third item
+
+Note again how the actual text starts at 4 columns in (4 characters
+from the left side). Here's a code sample:
+
+    # Let me re-iterate ...
+    for i in 1 .. 10 { do-something(i) }
+
+As you probably guessed, indented 4 spaces. By the way, instead of
+indenting the block, you can use delimited blocks, if you like:
+\end{lstlisting}
+
+define foobar() \{ print ``Welcome to flavor country!''; \}
+\textasciitilde\textasciitilde\textasciitilde{}
+
+(which makes copying \& pasting easier). You can optionally mark the
+delimited block for Pandoc to syntax highlight it:
+
+\begin{lstlisting}[language=Python]
+import time
+# Quick, count to ten!
+for i in range(10):
+    # (but not *too* quick)
+    time.sleep(0.5)
+    print(i)
+\end{lstlisting}
+
+\hypertarget{an-h3-header}{%
+\subsubsection{An h3 header}\label{an-h3-header}}
+
+Now a nested list:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  First, get these ingredients:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    carrots
+  \item
+    celery
+  \item
+    lentils
+  \end{itemize}
+\item
+  Boil some water.
+\item
+  Dump everything in the pot and follow this algorithm:
+
+\begin{lstlisting}
+find wooden spoon
+uncover pot
+stir
+cover pot
+balance wooden spoon precariously on pot handle
+wait 10 minutes
+goto first step (or shut off burner when done)
+\end{lstlisting}
+
+  Do not bump wooden spoon or it will fall.
+\end{enumerate}
+
+Notice again how text always lines up on 4-space indents (including that
+last line which continues item 3 above).
+
+Here's a link to \href{http://foo.bar}{a website}, to a
+\href{local-doc.html}{local doc}, and to a
+\protect\hyperlink{an-h2-header}{section heading in the current doc}.
+Here's a footnote \footnote{Some footnote text.}.
+
+Tables can look like this:
+
+\begin{longtable}[]{@{}lrll@{}}
+\caption{Shoes sizes, materials, and colors.}\tabularnewline
+\toprule
+Name & Size & Material & Color\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+Name & Size & Material & Color\tabularnewline
+\midrule
+\endhead
+All Business & 9 & leather & brown\tabularnewline
+Roundabout & 10 & hemp canvas & natural\tabularnewline
+Cinderella & 11 & glass & transparent\tabularnewline
+\bottomrule
+\end{longtable}
+
+(The above is the caption for the table.) Pandoc also supports
+multi-line tables:
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.13\columnwidth}\raggedright
+Keyword\strut
+\end{minipage} & \begin{minipage}[b]{0.31\columnwidth}\raggedright
+Text\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.13\columnwidth}\raggedright
+red\strut
+\end{minipage} & \begin{minipage}[t]{0.31\columnwidth}\raggedright
+Sunsets, apples, and other red or reddish things.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.13\columnwidth}\raggedright
+green\strut
+\end{minipage} & \begin{minipage}[t]{0.31\columnwidth}\raggedright
+Leaves, grass, frogs and other things it's not easy being.\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+A horizontal rule follows.
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+Here's a definition list:
+
+\begin{description}
+\tightlist
+\item[apples]
+Good for making applesauce.
+\item[oranges]
+Citrus!
+\item[tomatoes]
+There's no ``e'' in tomatoe.
+\end{description}
+
+Again, text is indented 4 spaces. (Put a blank line between each term
+and its definition to spread things out more.)
+
+Here's a ``line block'' (note how whitespace is honored):
+
+Line one\\
+\hspace*{0.333em}\hspace*{0.333em}Line too\\
+Line tree
+
+and images can be specified like so:
+
+\begin{figure}
+\centering
+\includegraphics{example-image.jpg}
+\caption{example image}
+\end{figure}
+
+Inline math equation: \(\omega = d\phi / dt\). Display math should get
+its own line like so:
+
+\[I = \int \rho R^{2} dV\]
+
+And note that you can backslash-escape any punctuation characters which
+you wish to be displayed literally, ex.: `foo`, *bar*, etc.
+
+
+
+\printbibliography
+
+\end{document}
