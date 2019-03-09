@@ -19,3 +19,5 @@ Each example folder follows the '-l' option structure as follows:
 ```
 
 Each folder has a `.git` inside it, as result of git integration with `Logbuch`. The usage of this integration is not mandatory, but recommended.
+
+___In order to publish this repository with subrepositories, I renamed the `.git` folder to `.git_` in each of them. So if you want to completely check this example repository, rename these git folders back to `.git`.____
