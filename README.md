@@ -3,7 +3,7 @@ An example of [Logbuch](https://github.com/bertolinocastro/logbuch) outputs and 
 
 Each folder inside this repository is an output folder defined in `projects_folder` parameter at configuration file.
 
-Each example folder follows the '-l' option structure as follows:
+Each example folder follows the Logbuch `-l` option structure as follows:
 ```
  demonstration┐
               │
